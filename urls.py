@@ -1,16 +1,9 @@
-from django.urls import path
-from .views import (
-    ParentSignupView,
-    HospitalSignupView,
-    LoginView,
-    AddChildView,
-    AddVaccineRecordView
-)
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('parent/signup/', ParentSignupView.as_view(), name='parent-signup'),
-    path('hospital/signup/', HospitalSignupView.as_view(), name='hospital-signup'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('child/add/', AddChildView.as_view(), name='add-child'),
-    path('vaccine/<str:child_unique_id>/', AddVaccineRecordView.as_view(), name='vaccine-record'),
-]
+    path('admin/', admin.site.urls),
+    path('api/', include('core.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
